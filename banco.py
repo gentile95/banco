@@ -1,3 +1,5 @@
+import functions
+
 LIMITE_SAQUE = 3
 MAX_SAQUE = 500
 saldo = 1000
@@ -29,11 +31,7 @@ while (True):
       if deposito < 0:
         print("\nValor digitado incorretamente")
       else:
-        saldo += deposito
-        deposito_count += 1
-        acao.append(f"depósito_{deposito_count} R$ +{deposito:.2f}")
-        extrato.append(f"total R$ {saldo:.2f}")
-        print("\nQuantia depositada!\n")
+        functions.depositar(deposito)
     
     elif x == 2:
       if saque_count < 3:
@@ -48,10 +46,7 @@ while (True):
             if saldo < saque:
               print("\nDesculpe, não há saldo suficiente para essa transação")
             else:
-              saque_count += 1
-              saldo -= saque
-              acao.append(f"saque_{saque_count} R$ -{saque:.2f}")
-              extrato.append(f"total R$ {saldo:.2f}")
+              functions.saque(saque)
       else:
         print("\nDesculpe, você atingiu o limite máximo de saque")
     
@@ -59,14 +54,7 @@ while (True):
       if saque_count == 0 and deposito_count == 0:
         print("\nAinda não foi realizada nenhuma ação")
       else:
-        extrato_dic = {k:v for k, v in zip(acao, extrato)}
-        mostrar_extrato = "\n".join(f"{key} : {value}" for key, value in extrato_dic.items())
-        print(f"""\nSeu extrato atualizado:
-
------------------------
-{mostrar_extrato}
------------------------
-""")
+        functions.extrato()
     
     else:
       break
