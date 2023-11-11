@@ -1,62 +1,47 @@
-import functions
+from classes.conta import Conta
 
-LIMITE_SAQUE = 3
-MAX_SAQUE = 500
-saldo = 1000
-acao = []
-extrato = []
-saque_count = 0
-deposito_count = 0
+conta = Conta(51248, '12345678910')
 
-while (True):
-  print("""
-  Selecione a opção desejada:
+def main():
 
-  1 - Depositar
-  2 - Sacar
-  3 - Extrato 
-  4 - Sair 
-  ---------------------------
+    while(True):
 
-  """)
-
-  x = int(input())
-
-  if x < 1 or x > 4:
-    print("\nOpção inválida")
-  else:
-    if x == 1:
-      print("\nInforme a quantia a ser depositada: ")
-      deposito = float(input())
-      if deposito < 0:
-        print("\nValor digitado incorretamente")
-      else:
-        functions.depositar(deposito)
+        print("""
+        Selecione a opção desejada:
     
-    elif x == 2:
-      if saque_count < 3:
-        print("\nQual valor a ser sacado?")
-        saque = float(input())
-        if saque < 0:
-          print("\nValor digitado incorretamente")
+        1 - Depositar
+        2 - Sacar
+        3 - Extrato 
+        4 - Sair 
+        ---------------------------
+    
+        """)
+
+        valido = False
+        while (valido == False):
+            try:
+                x = int(input())
+                valido = True
+            except ValueError as e:
+                print("Valor não é válido, digite uma nova opção")
+            
+        if x < 1 or x > 4:
+            print("Opção inválida")
+            continue
         else:
-          if saque > MAX_SAQUE:
-            print("\nDesculpe, o limite máximo para saque é de R$ 500.00")
-          else:
-            if saldo < saque:
-              print("\nDesculpe, não há saldo suficiente para essa transação")
-            else:
-              functions.saque(saque)
-      else:
-        print("\nDesculpe, você atingiu o limite máximo de saque")
-    
-    elif x == 3:
-      if saque_count == 0 and deposito_count == 0:
-        print("\nAinda não foi realizada nenhuma ação")
-      else:
-        functions.extrato()
-    
-    else:
-      break
+            match(x):
+                case 1:
+                    print("Valor do depósito: ")
+                    deposito = float(input())
+                    conta.depositar(deposito)
+                case 2:
+                    print("Valor do saque: ")
+                    saque = float(input())
+                    conta.sacar(saque)
+                case 3:
+                    conta.mostrar_extrato()
+                case 4:
+                    break
 
-
+if __name__ == '__main__':
+    main()
